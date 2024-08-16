@@ -13,7 +13,9 @@ export default {
         'gray-80':'#282824',
         'gray-90':'#121214',
         'gray-110':'#88875f',
-        'green-10':'#00B37E'
+        'green-30':'#00B37E',
+        'green-50':'#00875f',
+        'red-50':'#f75a68',
       },
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
