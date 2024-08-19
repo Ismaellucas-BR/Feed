@@ -1,64 +1,64 @@
+import {format, formatDistanceToNow} from 'date-fns'
+import ptBr from 'date-fns/locale/pt-BR'
 import React from 'react'
 import ImgProfile from './ImgProfile'
 import Comment from './Comment'
 
-function ContentMain() {
+
+
+function ContentMain({ author, publishedAt, content}) {
+  
+  const publishedDateFormatted= format(publishedAt,"d 'de' LLLL 'às' HH:mm'h'",{
+    locale:ptBr,
+  })
+  const publishedDateRelativeToNow= formatDistanceToNow(publishedAt,{
+    locale:ptBr,
+    addSuffix:true,
+  })
+
   return (
     <article className='PostMain bg-gray-80 rounded-lg p-10 font-roboto'>
       
       <header className='flex items-center justify-between'>
+
         <div className='flex items-center gap-4'>
-          <ImgProfile extraClass="out" link=""/>
+
+          <ImgProfile extraClass="out" link={author.avatarUrl}/>
+
           <div className='flex flex-col'>
             <strong 
               className='mt-4 text-gray-10 leading-[1.6]'>
-                Ismael Lucas
+                {author.name}
             </strong>
             <span 
               className='text-[0.875rem] text-gray-40 leading-[1.6]'>
-                Desenvolvedor Front-end
+                {author.role}
             </span>
           </div>
+
         </div>
+
         <time 
           className='text-sm text-gray-40'
-          title='15 de agosto ás 08:00h' 
-          dateTime='2024-08-15 08:00:00'>
-            Publicado há 1h
+          title={publishedDateFormatted}
+          dateTime={publishedAt.toISOString()}>
+            {publishedDateRelativeToNow}
         </time>
+
       </header>
 
       <div className='leading-[1.6] text-gray-30 mt-6'>
-        <p className='mt-4'>Fala galeraa 👋</p>
-        <p className='mt-4'>Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀</p>
-        <p className='mt-4'>
-          <a 
-            className='font-bold text-green-50 no-underline hover:text-green-30' 
-            href="#">
-              👉 jane.design/doctorcare
-            </a>
-        </p>
-        <p className='flex mt-4 gap-1'>
-          <a 
-            className='font-bold text-green-50 no-underline hover:text-green-30' 
-            href="#">
-              #novoprojeto
-          </a>
-          <a 
-            className='font-bold text-green-50 no-underline hover:text-green-30' 
-            href="#">
-              #nlw
-          </a>
-          <a 
-            className='font-bold text-green-50 no-underline hover:text-green-30' 
-            href="#">
-              #rocketseat
-          </a>
-        </p>
+        {content.map(line=>{
+          if(line.type==="paragraph"){
+            return <p>{line.content}</p>
+          }else if(line.type==="link"){
+            return <p className='flex '><a href="#">{line.content}</a></p>
+          }
+        })}
       </div>
 
       <form className='formulario w-full mt-6 pt-6 border-t border-gray-60 '>
-        <strong className='leading-[1.6] text-gray-10'>Deixei seu feedback</strong>
+        <strong className='leading-[1.6] text-gray-10'>Deixe seu feedback</strong>
 
         <textarea
           className='w-full bg-gray-90 border-0 resize-none h-24 p-4 rounded-lg text-gray-10 leading-[1.4] mt-4'
