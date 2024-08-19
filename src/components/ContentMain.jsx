@@ -1,12 +1,15 @@
 import {format, formatDistanceToNow} from 'date-fns'
 import ptBr from 'date-fns/locale/pt-BR'
-import React from 'react'
+import React, { useState } from 'react'
 import ImgProfile from './ImgProfile'
 import Comment from './Comment'
 
 
 
 function ContentMain({ author, publishedAt, content}) {
+const [comments, setComments]=useState([]);
+const [newCommentText, setNewCommentText]=useState([]);
+const [like, setLike]=useState([]);
   
   const publishedDateFormatted= format(publishedAt,"d 'de' LLLL 'às' HH:mm'h'",{
     locale:ptBr,
@@ -15,6 +18,18 @@ function ContentMain({ author, publishedAt, content}) {
     locale:ptBr,
     addSuffix:true,
   })
+
+  function HandleCreateNewComment(event){
+    event.preventDefault();
+
+    setComments([...comments, newCommentText]) 
+    setNewCommentText('');
+  }
+
+  function HandlenewCommentText(event){
+    setNewCommentText(event.target.value) 
+  }
+
 
   return (
     <article className='PostMain bg-gray-80 rounded-lg p-10 font-roboto'>
@@ -57,12 +72,14 @@ function ContentMain({ author, publishedAt, content}) {
         })}
       </div>
 
-      <form className='formulario w-full mt-6 pt-6 border-t border-gray-60 '>
+      <form onSubmit={HandleCreateNewComment} className='formulario w-full mt-6 pt-6 border-t border-gray-60 '>
         <strong className='leading-[1.6] text-gray-10'>Deixe seu feedback</strong>
 
         <textarea
+          value={newCommentText}
           className='w-full bg-gray-90 border-0 resize-none h-24 p-4 rounded-lg text-gray-10 leading-[1.4] mt-4'
           placeholder='Deixe seu comentário'
+          onChange={HandlenewCommentText}
         />
         <footer className='invisible max-h-0 focus-within:visible focus-within:max-h-none'>
           <button 
@@ -73,7 +90,9 @@ function ContentMain({ author, publishedAt, content}) {
         </footer>
       </form>
       <div className='mt-8'>
-        <Comment/>
+        {comments.map(comment=>{
+          return <Comment content={comment}/>
+        })}
       </div>
     </article>
   )
