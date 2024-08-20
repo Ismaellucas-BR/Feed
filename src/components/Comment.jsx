@@ -1,7 +1,17 @@
 import { ThumbsUp, Trash } from 'phosphor-react'
-import React from 'react'
+import React, { useState } from 'react'
 
-function Comment(props) {
+function Comment({content, onDeleteComment}) {
+    const [likeCount, setLikeCount]=useState(0)
+
+    function HandleDeleteComment(){
+        onDeleteComment(content)
+    }
+    function HandleLikeComment(){
+        setLikeCount((state)=>{
+            return state+1
+    })
+}
   return (
     <div className='flex mt-6 gap-4'>
         <img 
@@ -22,19 +32,22 @@ function Comment(props) {
                     </time>
                     </div>
                     <button
+                        onClick={HandleDeleteComment}
                         className='text-gray-40 cursor-pointer leading-none rounded-sm hover:text-red-50'
                         title='Deletar comentário'>
                         <Trash size={20}/>
                     </button>
                 </header>
                 
-                <p className='mt-4 text-gray-30'>{props.content}</p>
+                <p className='mt-4 text-gray-30'>{content}</p>
             </div>
 
             <footer className='mt-4'>
-                <button className='flex items-center bg-transparent border-0 text-gray-40 cursor-pointer hover:text-green-30'>
+                <button 
+                    onClick={HandleLikeComment}
+                    className='flex items-center bg-transparent border-0 text-gray-40 cursor-pointer hover:text-green-30'>
                     <ThumbsUp className='mr-2'/>
-                    Aplaudir <span className='countButton'>20</span>
+                    Aplaudir <span className='countButton'>{likeCount}</span>
                 </button>
             </footer>
 

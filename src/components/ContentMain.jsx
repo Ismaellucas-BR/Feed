@@ -18,6 +18,7 @@ const [like, setLike]=useState([]);
     locale:ptBr,
     addSuffix:true,
   })
+  const isNewCommentEmpty=newCommentText.length===0
 
   function HandleCreateNewComment(event){
     event.preventDefault();
@@ -27,7 +28,18 @@ const [like, setLike]=useState([]);
   }
 
   function HandlenewCommentText(event){
+    event.target.setCustomValidity("")
     setNewCommentText(event.target.value) 
+  }
+  function HandleNewCommentInvalid(){
+    event.target.setCustomValidity("Esse campo é obrigatório!")
+  }
+  function DeleteComment(commentToDelete){
+    const commentsWithoutDeletedOne= comments.filter(comment=>{
+      return comment !== commentToDelete
+    })
+    setComments(commentsWithoutDeletedOne)
+    
   }
 
 
@@ -65,9 +77,9 @@ const [like, setLike]=useState([]);
       <div className='leading-[1.6] text-gray-30 mt-6'>
         {content.map(line=>{
           if(line.type==="paragraph"){
-            return <p>{line.content}</p>
+            return <p key={line.content}>{line.content}</p>
           }else if(line.type==="link"){
-            return <p className='flex '><a href="#">{line.content}</a></p>
+            return <p key={line.content} className='flex '><a href="#">{line.content}</a></p>
           }
         })}
       </div>
@@ -80,18 +92,24 @@ const [like, setLike]=useState([]);
           className='w-full bg-gray-90 border-0 resize-none h-24 p-4 rounded-lg text-gray-10 leading-[1.4] mt-4'
           placeholder='Deixe seu comentário'
           onChange={HandlenewCommentText}
+          onInvalid={HandleNewCommentInvalid}
+          required 
         />
+
         <footer className='invisible max-h-0 focus-within:visible focus-within:max-h-none'>
           <button 
-            className='py-4 px-6 mt-4 rounded-lg border-0 bg-green-50 text-white font-bold cursor-pointer hover:bg-green-30 transition-colors duration-10 focus-within:visible focus-within:max-h-none'
-            type="submit">
+            className='py-4 px-6 mt-4 rounded-lg border-0 bg-green-50 text-white font-bold cursor-pointer hover:bg-green-30 transition-colors duration-10 focus-within:visible focus-within:max-h-none disabled:opacity-70 disabled:bg-green-50 disabled:cursor-not-allowed'
+            type="submit"
+            disabled={isNewCommentEmpty}
+          >
               Publicar
           </button>
         </footer>
+
       </form>
       <div className='mt-8'>
         {comments.map(comment=>{
-          return <Comment content={comment}/>
+          return <Comment key={comment} content={comment} onDeleteComment={DeleteComment}/>
         })}
       </div>
     </article>
