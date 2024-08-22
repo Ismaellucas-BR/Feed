@@ -1,17 +1,16 @@
 import { PencilLine} from "phosphor-react";
 import React from 'react'
-import Capa from '../assets/capa.jpeg'
 import ImgProfile from "./ImgProfile";
 function Aside() {
   return (
     <aside className='bg-gray-80 rounded-lg overflow-hidden'>
         <img 
-            src={Capa} 
+            src="https://media.licdn.com/dms/image/v2/C4E16AQHPMVVQkD7FQQ/profile-displaybackgroundimage-shrink_350_1400/profile-displaybackgroundimage-shrink_350_1400/0/1617132334941?e=1729728000&v=beta&t=O93w7TJDrfLdWj27xMWsz-bp7o-mMVHDMh9_Y82Ng04"
             alt="Foto de varios personagens de star wars juntos"
             className='w-full h-[72px] object-cover'
         />
         <div className='flex flex-col items-center font-roboto'>
-            <ImgProfile extraClass="out" link="https://avatars.githubusercontent.com/u/76995730?v=4"/>
+            <ImgProfile extraClass="out" src="https://avatars.githubusercontent.com/u/76995730?v=4"/>
             <strong className='mt-4 text-gray-10 leading-[1.6]'>Ismael Lucas</strong>
             <span className='text-[0.875rem] text-gray-40 leading-[1.6]'>Desenvolvedor Front-end</span>
         </div>

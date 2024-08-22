@@ -1,40 +1,55 @@
 import {format, formatDistanceToNow} from 'date-fns'
-import ptBr from 'date-fns/locale/pt-BR'
-import React, { useState } from 'react'
+import {ptBR} from 'date-fns/locale/pt-BR'
+import React, { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
 import ImgProfile from './ImgProfile'
 import Comment from './Comment'
 
+interface Author{
+  name:String;
+  role:string;
+  avatarUrl:string;
+}
 
+interface Content{
+  type: 'paragraph' | 'link' | string;
+  content: string;
+}
 
-function ContentMain({ author, publishedAt, content}) {
-const [comments, setComments]=useState([]);
-const [newCommentText, setNewCommentText]=useState([]);
+interface PostProps{
+  author:Author;
+  publishedAt:Date;
+  content:Content[];
+}
+
+function ContentMain({ author, publishedAt, content}:PostProps) {
+const [comments, setComments] = useState<string[]>([]);
+const [newCommentText, setNewCommentText]=useState("");
 const [like, setLike]=useState([]);
   
   const publishedDateFormatted= format(publishedAt,"d 'de' LLLL 'às' HH:mm'h'",{
-    locale:ptBr,
+    locale:ptBR,
   })
   const publishedDateRelativeToNow= formatDistanceToNow(publishedAt,{
-    locale:ptBr,
+    locale:ptBR,
     addSuffix:true,
   })
   const isNewCommentEmpty=newCommentText.length===0
 
-  function HandleCreateNewComment(event){
+  function HandleCreateNewComment(event:FormEvent){
     event.preventDefault();
 
     setComments([...comments, newCommentText]) 
     setNewCommentText('');
   }
 
-  function HandlenewCommentText(event){
+  function HandlenewCommentText(event: ChangeEvent<HTMLTextAreaElement>){
     event.target.setCustomValidity("")
     setNewCommentText(event.target.value) 
   }
-  function HandleNewCommentInvalid(){
+  function HandleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>){
     event.target.setCustomValidity("Esse campo é obrigatório!")
   }
-  function DeleteComment(commentToDelete){
+  function DeleteComment(commentToDelete:string){
     const commentsWithoutDeletedOne= comments.filter(comment=>{
       return comment !== commentToDelete
     })
@@ -50,7 +65,7 @@ const [like, setLike]=useState([]);
 
         <div className='flex items-center gap-4'>
 
-          <ImgProfile extraClass="out" link={author.avatarUrl}/>
+          <ImgProfile extraClass="out" src={author.avatarUrl}/>
 
           <div className='flex flex-col'>
             <strong 
