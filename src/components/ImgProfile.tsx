@@ -9,7 +9,7 @@ function ImgProfile({ extraClass, ...props }: AvatarProps) {
     <img
       {...props}
       alt="Foto de usuário"
-      className={`w-12 h-12 rounded-lg mt-[calc(0px-1.5rem-6px)] border-4 border-gray-80 box-content ${extraClass}`}
+      className={`w-12 h-12 rounded-lg  border-4 border-gray-80 box-content ${extraClass}`}
     />
   );
 }

@@ -65,13 +65,13 @@ const [like, setLike]=useState([]);
 
         <div className='flex items-center gap-4'>
 
-          <ImgProfile extraClass="out" src={author.avatarUrl}/>
+          <ImgProfile extraClass="out mt-0" src={author.avatarUrl}/>
 
           <div className='flex flex-col'>
-            <strong 
+            <b 
               className='mt-4 text-gray-10 leading-[1.6]'>
                 {author.name}
-            </strong>
+            </b>
             <span 
               className='text-[0.875rem] text-gray-40 leading-[1.6]'>
                 {author.role}
@@ -89,15 +89,26 @@ const [like, setLike]=useState([]);
 
       </header>
 
-      <div className='leading-[1.6] text-gray-30 mt-6'>
-        {content.map(line=>{
-          if(line.type==="paragraph"){
-            return <p key={line.content}>{line.content}</p>
-          }else if(line.type==="link"){
-            return <p key={line.content} className='flex '><a href="#">{line.content}</a></p>
-          }
-        })}
-      </div>
+      <div className="flex flex-col leading-[1.6] text-gray-30 mt-6">
+  {content.map((line, index) => {
+    if (line.type === "paragraph") {
+      return <p key={index}>{line.content}</p>;
+    }
+  })}
+  
+  <div className="flex gap-4 mt-4">
+    {content.map((line, index) => {
+      if (line.type === "link") {
+        return (
+          <a key={index} className='text-green-30' href="#">
+            {line.content}
+          </a>
+        );
+      }
+    })}
+  </div>
+</div>
+
 
       <form onSubmit={HandleCreateNewComment} className='formulario w-full mt-6 pt-6 border-t border-gray-60 '>
         <strong className='leading-[1.6] text-gray-10'>Deixe seu feedback</strong>
