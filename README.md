@@ -1,8 +1,17 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<div style="display: flex; justify-content: center;">
+  <h1 style="color: red;">Feed</h1>
+</div>
+<div style="display: flex; justify-content: center; margin-bottom: 20px;">
+  <span style="color: red;">
+    Aplicação desenvolvida para simular uma pequena rede social.
+    O objetivo foi estudar e entender melhor como funciona os estados do React js
+  </span>
+  <div>
+    <br>
+   <a style="text-decoration:none;" target="_blank" href="https://feed.developerismaellucas.com/">🔗Link do projeto</a> 
+  </div>
+</div>
+<div style="margin-top: 40px; display: flex; justify-content: center;">
+  <br>
+  <img src="https://github.com/Ismaellucas-BR/Next-Portfolio/blob/main/public/assets/MainPrintFeed.jpg" alt="capa do projeto Feed">
+</div>
